@@ -1,21 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
+import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
 
-import Aux from '../../hoc/Aux/Aux';
-import Burger from '../../components/Burger/Burger';
-import BuildControls from '../../components/Burger/BuildControls/BuildControls';
-import Modal from '../../components/UI/Modal/Modal';
-import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
-import Spinner from '../../components/UI/Spinner/Spinner';
-import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
-import * as actions from '../../store/actions/index';
-import axios from '../../axios-orders';
+import Burger from "../../components/Burger/Burger";
+import BuildControls from "../../components/Burger/BuildControls/BuildControls";
+import Modal from "../../components/UI/Modal/Modal";
+import OrderSummary from "../../components/Burger/OrderSummary/OrderSummary";
+import Spinner from "../../components/UI/Spinner/Spinner";
+import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
+import * as actions from "../../store/actions/index";
+import axios from "../../axios-orders";
 
 const burgerBuilder = props => {
-  // constructor(props) {
-  //     super(props);
-  //     this.state = {...}
-  // }
   const [purchasing, setPurchasing] = useState(false);
 
   useEffect(() => {
@@ -37,8 +32,8 @@ const burgerBuilder = props => {
     if (props.isAuthenticated) {
       setPurchasing(true);
     } else {
-      props.onSetAuthRedirectPath('/checkout');
-      props.history.push('/auth');
+      props.onSetAuthRedirectPath("/checkout");
+      props.history.push("/auth");
     }
   };
 
@@ -48,7 +43,7 @@ const burgerBuilder = props => {
 
   const purchaseContinueHandler = () => {
     props.onInitPurchase();
-    props.history.push('/checkout');
+    props.history.push("/checkout");
   };
 
   const disabledInfo = {
@@ -62,7 +57,7 @@ const burgerBuilder = props => {
 
   if (props.ings) {
     burger = (
-      <Aux>
+      <React.Fragment>
         <Burger ingredients={props.ings} />
         <BuildControls
           ingredientAdded={props.onIngredientAdded}
@@ -73,7 +68,7 @@ const burgerBuilder = props => {
           isAuth={props.isAuthenticated}
           price={props.price}
         />
-      </Aux>
+      </React.Fragment>
     );
     orderSummary = (
       <OrderSummary
@@ -86,15 +81,12 @@ const burgerBuilder = props => {
   }
   // {salad: true, meat: false, ...}
   return (
-    <Aux>
-      <Modal
-        show={purchasing}
-        modalClosed={purchaseCancelHandler}
-      >
+    <React.Fragment>
+      <Modal show={purchasing} modalClosed={purchaseCancelHandler}>
         {orderSummary}
       </Modal>
       {burger}
-    </Aux>
+    </React.Fragment>
   );
 };
 
