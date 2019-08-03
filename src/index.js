@@ -9,6 +9,8 @@ import App from "./App";
 
 import store from "./store/configureStore";
 
+require("dotenv").config();
+
 const app = (
   <Provider store={store}>
     <BrowserRouter>

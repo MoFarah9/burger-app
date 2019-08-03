@@ -1,27 +1,19 @@
-import React, { useEffect, Suspense } from 'react';
-import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
+import React, { useEffect, Suspense } from "react";
+import { Route, Switch, withRouter, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
 
-import Layout from './hoc/Layout/Layout';
-import BurgerBuilder from './containers/BurgerBuilder/BurgerBuilder';
-import Logout from './containers/Auth/Logout/Logout';
-import * as actions from './store/actions/index';
+import * as actions from "./store/actions/index";
+import Layout from "./hoc/Layout/Layout";
+import BurgerBuilder from "./containers/BurgerBuilder/BurgerBuilder";
+import Logout from "./containers/Auth/Logout/Logout";
 
-const Checkout = React.lazy(() => {
-  return import('./containers/Checkout/Checkout');
-});
-
-const Orders = React.lazy(() => {
-  return import('./containers/Orders/Orders');
-});
-
-const Auth = React.lazy(() => {
-  return import('./containers/Auth/Auth');
-});
+const Checkout = React.lazy(() => import("./containers/Checkout/Checkout"));
+const Orders = React.lazy(() => import("./containers/Orders/Orders"));
+const Auth = React.lazy(() => import("./containers/Auth/Auth"));
 
 const app = props => {
   useEffect(() => {
-    props.onTryAutoSignup();
+    props.tryAutoSignup();
   }, []);
 
   let routes = (
@@ -54,17 +46,13 @@ const app = props => {
   );
 };
 
-const mapStateToProps = state => {
-  return {
-    isAuthenticated: state.auth.token !== null
-  };
-};
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.token !== null
+});
 
-const mapDispatchToProps = dispatch => {
-  return {
-    onTryAutoSignup: () => dispatch(actions.authCheckState())
-  };
-};
+const mapDispatchToProps = dispatch => ({
+  tryAutoSignup: () => dispatch(actions.authCheckState())
+});
 
 export default withRouter(
   connect(
