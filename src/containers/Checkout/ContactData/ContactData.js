@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
+import axios from "axios";
 
+import classes from "./ContactData.css";
 import Button from "../../../components/UI/Button/Button";
 import Spinner from "../../../components/UI/Spinner/Spinner";
-import classes from "./ContactData.css";
-import axios from "axios";
 import Input from "../../../components/UI/Input/Input";
 import withErrorHandler from "../../../hoc/withErrorHandler/withErrorHandler";
 import * as actions from "../../../store/actions/index";
@@ -122,6 +122,7 @@ const contactData = props => {
       ),
       touched: true
     });
+
     const updatedOrderForm = updateObject(orderForm, {
       [inputIdentifier]: updatedFormElement
     });
@@ -141,6 +142,7 @@ const contactData = props => {
       config: orderForm[key]
     });
   }
+
   let form = (
     <form onSubmit={orderHandler}>
       {formElementsArray.map(formElement => (
@@ -160,9 +162,11 @@ const contactData = props => {
       </Button>
     </form>
   );
+
   if (props.loading) {
     form = <Spinner />;
   }
+
   return (
     <div className={classes.ContactData}>
       <h4>Enter your Contact Data</h4>

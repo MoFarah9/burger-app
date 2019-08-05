@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
+import axios from "axios";
 
 import Burger from "../../components/Burger/Burger";
 import BuildControls from "../../components/Burger/BuildControls/BuildControls";
-import Modal from "../../components/UI/Modal/Modal";
 import OrderSummary from "../../components/Burger/OrderSummary/OrderSummary";
+import Modal from "../../components/UI/Modal/Modal";
 import Spinner from "../../components/UI/Spinner/Spinner";
 import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
 import * as actions from "../../store/actions/index";
-import axios from "axios";
 
 const burgerBuilder = props => {
   const [purchasing, setPurchasing] = useState(false);
@@ -19,12 +19,8 @@ const burgerBuilder = props => {
 
   const updatePurchaseState = ingredients => {
     const sum = Object.keys(ingredients)
-      .map(igKey => {
-        return ingredients[igKey];
-      })
-      .reduce((sum, el) => {
-        return sum + el;
-      }, 0);
+      .map(igKey => ingredients[igKey])
+      .reduce((sum, el) => sum + el, 0);
     return sum > 0;
   };
 
@@ -37,18 +33,14 @@ const burgerBuilder = props => {
     }
   };
 
-  const purchaseCancelHandler = () => {
-    setPurchasing(false);
-  };
+  const purchaseCancelHandler = () => setPurchasing(false);
 
   const purchaseContinueHandler = () => {
     props.onInitPurchase();
     props.history.push("/checkout");
   };
 
-  const disabledInfo = {
-    ...props.ings
-  };
+  const disabledInfo = { ...props.ings };
   for (let key in disabledInfo) {
     disabledInfo[key] = disabledInfo[key] <= 0;
   }
