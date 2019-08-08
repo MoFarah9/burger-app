@@ -10,7 +10,7 @@ import Spinner from "../../components/UI/Spinner/Spinner";
 import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
 import * as actions from "../../store/actions/index";
 
-const burgerBuilder = props => {
+export const BurgerBuilder = props => {
   const [purchasing, setPurchasing] = useState(false);
 
   useEffect(() => {
@@ -104,4 +104,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withErrorHandler(burgerBuilder, axios));
+)(withErrorHandler(BurgerBuilder, axios));
